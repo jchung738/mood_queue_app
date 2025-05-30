@@ -41,9 +41,18 @@ st.subheader("2. Today's Mood Trends")
 def load_data():
     data = sheet.get_all_records()
     df = pd.DataFrame(data)
-    if 'timestamp' in df.columns:
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df['date'] = df['timestamp'].dt.date
+
+    if not df.empty and 'timestamp' in df.columns:
+        try:
+            df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+            df = df.dropna(subset=['timestamp'])
+            df['date'] = df['timestamp'].dt.date
+        except Exception as e:
+            st.error(f"Error parsing timestamps: {e}")
+            df['date'] = None
+    else:
+        df['date'] = None
+
     return df
 
 df = load_data()
