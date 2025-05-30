@@ -3,21 +3,21 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 import gspread
-import json
 from google.oauth2.service_account import Credentials
-# --- Google Sheets Setup ---
 
+# --- Google Sheets Setup ---
 @st.cache_resource
 def connect_to_gsheet():
-    creds_dict = st.secrets["google"]
-    creds = Credentials.from_service_account_info(creds_dict, scopes=[
-        'https://spreadsheets.google.com/feeds',
-        'https://www.googleapis.com/auth/drive'
-    ])
+    creds = Credentials.from_service_account_info(
+        st.secrets["google"],
+        scopes=[
+            'https://spreadsheets.google.com/feeds',
+            'https://www.googleapis.com/auth/drive',
+        ]
+    )
     client = gspread.authorize(creds)
     sheet = client.open(st.secrets["general"]["sheet_name"]).sheet1
     return sheet
-
 
 sheet = connect_to_gsheet()
 
