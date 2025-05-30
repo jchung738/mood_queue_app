@@ -4,7 +4,7 @@ import plotly.express as px
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
-
+import time
 # --- Google Sheets Setup ---
 @st.cache_resource
 def connect_to_gsheet():
@@ -71,4 +71,6 @@ else:
 st.markdown("---")
 refresh = st.checkbox("Auto-refresh every 30s")
 if refresh:
+    time.sleep(30)
+    st.experimental_rerun = st._rerun
     st.experimental_rerun()
