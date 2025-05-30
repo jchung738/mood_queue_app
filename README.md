@@ -1,2 +1,3 @@
-# mood_queue_app
-A front-end interface which takes your mood as input.
+# The Mood Queue App
+A front-end interface which takes your mood throughout the day as input and gives a data visualization of today's moods.
+
